@@ -1,9 +1,11 @@
 package jp.shts.android.storiesprogressview;
 
 import android.content.Context;
+
 import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.Transformation;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 final class PausableProgressBar extends FrameLayout {
 
@@ -29,6 +32,7 @@ final class PausableProgressBar extends FrameLayout {
 
     interface Callback {
         void onStartProgress();
+
         void onFinishProgress();
     }
 
@@ -64,7 +68,7 @@ final class PausableProgressBar extends FrameLayout {
     }
 
     void setMinWithoutCallback() {
-        maxProgressView.setBackgroundResource(R.color.progress_secondary);
+//        maxProgressView.setBackgroundResource(R.color.progress_secondary);
 
         maxProgressView.setVisibility(VISIBLE);
         if (animation != null) {
@@ -74,9 +78,10 @@ final class PausableProgressBar extends FrameLayout {
     }
 
     void setMaxWithoutCallback() {
-        maxProgressView.setBackgroundResource(R.color.progress_max_active);
+//        maxProgressView.setBackgroundResource(R.color.progress_max_active);
 
-        maxProgressView.setVisibility(VISIBLE);
+//        maxProgressView.setVisibility(VISIBLE);
+        maxProgressView.setVisibility(GONE);
         if (animation != null) {
             animation.setAnimationListener(null);
             animation.cancel();
@@ -84,8 +89,9 @@ final class PausableProgressBar extends FrameLayout {
     }
 
     private void finishProgress(boolean isMax) {
-        if (isMax) maxProgressView.setBackgroundResource(R.color.progress_max_active);
-        maxProgressView.setVisibility(isMax ? VISIBLE : GONE);
+//        if (isMax) maxProgressView.setBackgroundResource(R.color.progress_max_active);
+//        maxProgressView.setVisibility(isMax ? VISIBLE : GONE);
+        maxProgressView.setVisibility(isMax ? GONE : GONE);
         if (animation != null) {
             animation.setAnimationListener(null);
             animation.cancel();
@@ -104,8 +110,11 @@ final class PausableProgressBar extends FrameLayout {
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                frontProgressView.setVisibility(View.VISIBLE);
+//                frontProgressView.setVisibility(View.VISIBLE);
+                frontProgressView.setVisibility(View.GONE);
                 if (callback != null) callback.onStartProgress();
+                String sec = String.valueOf(duration);
+                Toast.makeText(getContext(), "Slide Time : " + sec.replace("0", "") + " seconds", Toast.LENGTH_SHORT).show();
             }
 
             @Override
